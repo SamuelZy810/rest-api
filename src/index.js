@@ -1,43 +1,49 @@
-
-// Express app
-const exp_module = require('express');
-let app = exp_module();
-
-// Middleware
-const bdparser = require('body-parser');
-
-// Using middleware
-app.use(bdparser.json())
-app.use(bdparser.urlencoded({ extended: false }))
-
-// Mongo
-//const user_sch = require('./db_user_scema');
-//const conn = require('./db_connection');
+const { register_user_model } = require('./database/database');
 
 require('./database/database');
+const logger = require('./logger/winston_logger');
 
+async function insert_user(first_name, last_name, gender) {
 
-//app.get('/info', async (req, res) => {
+    try {
+        const new_user = await register_user_model.create({
+            firstname: first_name,
+            lastname: last_name,
+            gender: gender,
+            extrafield: 'Some extra string added :), jsut really random shit!',
+        });
+    } catch {
+        console.error('Error creating user!');
+    }
 
-//    const result = await user_sch.find({name: req.body.name});
+}
 
-//    const value = result.map(user => {user.lastname, user.name})
+async function get_all_users() {
 
-//    res.json(value);
+    logger.info('Listing all users!');
 
-//});
+    const users = await register_user_model.find().catch(
+        console.error('Couldn\'t fetch users!')
+    );
 
-//app.post('/submit', async (req, res) => {
+    //console.log(users);
 
-//    await user_sch.create({
-//        name: req.body.name,
-//        lastname: req.body.lastname
-//    });
+    logger.info('Users were listed!');
+}
 
-//    res.sendStatus(200);
+//insert_user(first_name='Jožko', last_name='Mrkvička', gender='other');
+get_all_users();
 
-//});
+async function b () {
+    try {
 
-app.listen(8080, () => {
-    console.log("\nServer is running!");
-});
+        res = await register_user_model.findByIdAndDelete('67c0848a818f35cfe2e9f6f9');
+        if (res) {
+            console.log('The user has been successfuly deleted!');
+        }
+
+    } catch (e) {
+        console.error('An error has occured:', e);
+    }
+}
+
