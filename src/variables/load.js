@@ -6,11 +6,6 @@ config( { path: path.resolve(__dirname, '../../private/env/.env') } );
 
 module.exports = {
     authMechanism: process.env.AUTH_MECHANISM,
-    test_db: {
-        dbName: process.env.BASIC_DATABASE,
-        user:   process.env.BASIC_USER,
-        pass:   process.env.BASIC_PASS,
-    },
     register_db: {
         dbName: process.env.REG_DATABASE,
         user:   process.env.REG_USER,

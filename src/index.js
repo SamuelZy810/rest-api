@@ -10,7 +10,6 @@ async function insert_user(first_name, last_name, gender) {
             firstname: first_name,
             lastname: last_name,
             gender: gender,
-            extrafield: 'Some extra string added :), jsut really random shit!',
         });
     } catch {
         console.error('Error creating user!');
